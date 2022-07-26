@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <CommandText>SELECT [COUNT_ROW]
+      ,[GRGR_ID]
+      ,[SBSB_ID]
+      ,[SBSB_LAST_NAME]
+      ,[SBSB_FIRST_NAME]
+      ,[SBSB_MID_INIT]
+      ,[MEPE_EFF_DT]
+      ,[MEPE_TERM_DT]
+      ,[CSPI_ID]
+      ,[PDPD_ID]
+      ,[BLDF_STOCK_ID]
+      ,[STATUS]
+  FROM [dbo].[TMG_BILLING_STATUS]</CommandText>
+    </Query>
+  </DataSet>
+</SharedDataSet>
