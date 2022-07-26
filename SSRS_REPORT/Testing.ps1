@@ -1,19 +1,14 @@
 Param(
 
-[Parameter(Mandatory=$True,Position=1)]
-[string]$DataSourceFile, 
-[Parameter(Mandatory=$True,Position=2)]
-[string]$ReportServerUri, 
-[Parameter(Mandatory=$True,Position=3)]
-[string]$DataSourceFolder, 
-[Parameter(Mandatory=$True,Position=4)]
-[string]$DBServerName, 
-[Parameter(Mandatory=$True,Position=5)]
-[string]$DatabaseName
-#[Parameter(Mandatory=$True,Position=6)]
-#[string]$DataSourceUserName,
-#[Parameter(Mandatory=$True,Position=7)]
-#[string]$DataSourcePassword
+
+[string] $DataSourceFile = "DataSource1", 
+[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer", 
+[string] $DataSourceFolder = "SSRS_REPORT", 
+[string] $DBServerName = "VM-SQLSVR-TMG-F", 
+[string] $DatabaseName = "Facetsext"
+#[string] $DataSourceUserName,
+#[string] $DataSourcePassword
+
 
 )
 
@@ -22,7 +17,7 @@ Echo "Report Server URI: $ReportServerUri"
 Echo "Data Source Folder: $DataSourceFolder"
 Echo "DB Server Name: $DBServerName"
 Echo "Database Name: $DatabaseName"
-Echo "Data Source UserName: $DataSourceUserName"
+
 
 $ConnectString = "Data Source="+ $DBServerName+ ";Initial Catalog="+ $DatabaseName
 try{
@@ -54,8 +49,8 @@ $credentialRetrieval = new-object ($credentialRetrievalDataType);
 $credentialRetrieval.value__ = 1;# Stored
 $dataSourceDefinition.CredentialRetrieval = $credentialRetrieval;
 $dataSourceDefinition.WindowsCredentials = $true;
-$dataSourceDefinition.UserName = $DataSourceUserName;
-$dataSourceDefinition.Password = $DataSourcePassword;
+#$dataSourceDefinition.UserName = $DataSourceUserName;
+#$dataSourceDefinition.Password = $DataSourcePassword;
 try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$DataSourceFolder,$true,
     $dataSourceDefinition,$null); }catch{ throw $_.Exception; }
 echo "Done.";
