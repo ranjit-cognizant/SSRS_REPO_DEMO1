@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <DataSet Name="DataSet1">
     <Query>
       <DataSourceReference>DataSource1</DataSourceReference>
@@ -17,5 +17,55 @@
       ,[STATUS]
   FROM [dbo].[TMG_BILLING_STATUS]</CommandText>
     </Query>
+    <Fields>
+      <Field Name="COUNT_ROW">
+        <DataField>COUNT_ROW</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="GRGR_ID">
+        <DataField>GRGR_ID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SBSB_ID">
+        <DataField>SBSB_ID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SBSB_LAST_NAME">
+        <DataField>SBSB_LAST_NAME</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SBSB_FIRST_NAME">
+        <DataField>SBSB_FIRST_NAME</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SBSB_MID_INIT">
+        <DataField>SBSB_MID_INIT</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="MEPE_EFF_DT">
+        <DataField>MEPE_EFF_DT</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="MEPE_TERM_DT">
+        <DataField>MEPE_TERM_DT</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="CSPI_ID">
+        <DataField>CSPI_ID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PDPD_ID">
+        <DataField>PDPD_ID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="BLDF_STOCK_ID">
+        <DataField>BLDF_STOCK_ID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="STATUS">
+        <DataField>STATUS</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
   </DataSet>
 </SharedDataSet>

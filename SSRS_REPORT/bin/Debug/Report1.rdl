@@ -11,22 +11,9 @@
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
-      <Query>
-        <DataSourceName>DataSource1</DataSourceName>
-        <CommandText>SELECT [COUNT_ROW]
-      ,[GRGR_ID]
-      ,[SBSB_ID]
-      ,[SBSB_LAST_NAME]
-      ,[SBSB_FIRST_NAME]
-      ,[SBSB_MID_INIT]
-      ,[MEPE_EFF_DT]
-      ,[MEPE_TERM_DT]
-      ,[CSPI_ID]
-      ,[PDPD_ID]
-      ,[BLDF_STOCK_ID]
-      ,[STATUS]
-  FROM [dbo].[TMG_BILLING_STATUS]</CommandText>
-      </Query>
+      <SharedDataSet>
+        <SharedDataSetReference>DataSet1</SharedDataSetReference>
+      </SharedDataSet>
       <Fields>
         <Field Name="COUNT_ROW">
           <DataField>COUNT_ROW</DataField>
