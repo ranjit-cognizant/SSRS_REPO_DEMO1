@@ -1,5 +1,5 @@
 Param(
-#[string] $SourceFolder = "/MyFolder111111111", 
+#[string] $DataSourceFolder = "/MyFolder111111111", 
 #[string] $DataSourceFile = "DataSource1.rds", 
 #[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
 #[string] $DBServerName = "VM-SQLSVR-TMG-P", 
@@ -8,7 +8,7 @@ Param(
 #[string] $DataSourceUserName = "alocalbox",
 #[string] $DataSourcePassword = "TriZett02022"
 
-[string] $DataSourceFolder,
+[string] $DataDataSourceFolder,
 [string] $DataSourceFile = "DataSource1.rds", 
 [string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl",
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
@@ -20,7 +20,7 @@ Param(
 
 $ErrorActionPreference = "Stop"
 
-Echo "Data Source Folder: $SourceFolder"
+Echo "Data Source Folder: $DataSourceFolder"
 Echo "Data Source File: $DataSourceFile"
 Echo "Report Server URI: $ReportServerUri"
 Echo "DB Server Name: $DBServerName"
@@ -74,21 +74,21 @@ try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$TargetFol
 
 Write-Output "====================================================================================="
 Write-Output "                             Deploying SSRS Reports"
-Write-Output "Source Folder: $SourceFolder"
+Write-Output "Source Folder: $DataSourceFolder"
 Write-Output "Target Server: $ReportServerUri"
 Write-Output "Target Folder: $TargetFolder"
 Write-Output "====================================================================================="
 
-#Write-Output "Deploying Data Source files from: $SourceFolder"
-#DIR $SourceFolder -Filter *.rds | % { $_.FullName } |
+#Write-Output "Deploying Data Source files from: $DataSourceFolder"
+#DIR $DataSourceFolder -Filter *.rds | % { $_.FullName } |
     #Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
-Write-Output "Deploying Data Set files from: $SourceFolder"
-DIR $SourceFolder -Filter *.rsd | % { $_.FullName } |
+Write-Output "Deploying Data Set files from: $DataSourceFolder"
+DIR $DataSourceFolder -Filter *.rsd | % { $_.FullName } |
     Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
-Write-Output "Deploying Report Definition files from: $SourceFolder"
-DIR $SourceFolder -Filter *.rdl | % { $_.FullName } |
+Write-Output "Deploying Report Definition files from: $DataSourceFolder"
+DIR $DataSourceFolder -Filter *.rdl | % { $_.FullName } |
     Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
 echo "Done.";
