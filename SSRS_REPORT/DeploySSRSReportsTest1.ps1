@@ -59,7 +59,7 @@ $dataSourceDefinition.CredentialRetrieval = $credentialRetrieval;
 $dataSourceDefinition.WindowsCredentials = $true;
 $dataSourceDefinition.UserName = $DataSourceUserName;
 $dataSourceDefinition.Password = $DataSourcePassword;
-try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$TargetFolder,$true,
+try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$SourceFolder,$true,
     $dataSourceDefinition,$null); }catch{ throw $_.Exception; }
 	
 
