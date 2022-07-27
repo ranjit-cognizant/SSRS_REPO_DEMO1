@@ -1,13 +1,14 @@
 Param(
 [string] $DataSourceFile = "DataSource1.rds", 
-[string] $TargetReportServerUri = "http://localhost/ReportServer_SQL2012/ReportService2010.asmx?wsdl", 
-[string] $SourceFolder = "SSRS_REPORT", 
+[string] $TargetReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
+[string] $SourceFolder = "", 
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
 [string] $DatabaseName = "Facetsext",
-[string] $TargetFolder = "MyReports"
-[string] $DataSourceUserName = "ranjit",
-[string] $DataSourcePassword = "TriZett02022#r@njit"
+[string] $TargetFolder = "MyReports",
+[string] $DataSourceUserName = "alocalbox",
+[string] $DataSourcePassword = "TriZett02022"
 )
+
 $ErrorActionPreference = "Stop"
 
 Echo "Data Source File: $DataSourceFile"
@@ -15,8 +16,12 @@ Echo "Report Server URI: $TargetReportServerUri"
 Echo "Data Source Folder: $SourceFolder"
 Echo "DB Server Name: $DBServerName"
 Echo "Database Name: $DatabaseName"
-Echo "Data TargetFolder: $TargetFolder"
+Echo "Data Target Folder: $TargetFolder"
 
+Write-Output "Creating Folder: $TargetFolder"
+New-RsFolder -ReportServerUri $TargetReportServerUri -Path / -Name $TargetFolder -Verbose -ErrorAction SilentlyContinue
+
+$TargetFolder = "/" + $TargetFolder
 
 $ConnectString = "Data Source="+ $DBServerName+ ";Initial Catalog="+ $DatabaseName
 try{
@@ -50,7 +55,7 @@ $dataSourceDefinition.CredentialRetrieval = $credentialRetrieval;
 $dataSourceDefinition.WindowsCredentials = $true;
 $dataSourceDefinition.UserName = $DataSourceUserName;
 $dataSourceDefinition.Password = $DataSourcePassword;
-try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$SourceFolder,$true,
+try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$TargetFolder,$true,
     $dataSourceDefinition,$null); }catch{ throw $_.Exception; }
 	
 
@@ -60,22 +65,6 @@ Write-Output "Source Folder: $SourceFolder"
 Write-Output "Target Server: $TargetReportServerUri"
 Write-Output "Target Folder: $TargetFolder"
 Write-Output "====================================================================================="
-
-Write-Output "Marking PSGallery as Trusted..."
-Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
-
-Write-Output "Installing ReportingServicesTools Module..."
-Install-Module -Name ReportingServicesTools            
-
-Write-Output "Requesting RSTools..."
-Invoke-Expression (Invoke-WebRequest https://aka.ms/rstools)
-
-#Get-Command -Module ReportingServicesTools
-
-Write-Output "Creating Folder: $TargetFolder"
-New-RsFolder -ReportServerUri $TargetReportServerUri -Path / -Name $TargetFolder -Verbose -ErrorAction SilentlyContinue
-
-$TargetFolder = "/" + $TargetFolder
 
 Write-Output "Deploying Data Source files from: $SourceFolder"
 DIR $SourceFolder -Filter *.rds | % { $_.FullName } |
@@ -88,7 +77,6 @@ DIR $SourceFolder -Filter *.rsd | % { $_.FullName } |
 Write-Output "Deploying Report Definition files from: $SourceFolder"
 DIR $SourceFolder -Filter *.rdl | % { $_.FullName } |
     Write-RsCatalogItem -ReportServerUri $TargetReportServerUri -Destination $TargetFolder -Verbose -Overwrite
-	
 
 echo "Done.";
 
