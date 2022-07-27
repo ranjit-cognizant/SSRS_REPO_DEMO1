@@ -1,12 +1,11 @@
 param (
-[string] $DataSourceFile = "DataSource1.rds", 
-[string] $SourceFolder = "SSRS",
-[string] $TargetReportServerUri = "http://localhost/ReportServer/ReportService2010.asmx?wsdl",
-[string] $TargetFolder = "MyReports"
-
+[string] $SourceFolder,
+[string] $TargetReportServerUri,
+[string] $TargetFolder
 )
 
 $ErrorActionPreference = "Stop"
+
 
 if ($SourceFolder -eq "") {
     $SourceFolder = $(Get-Location).Path + "\"
@@ -23,18 +22,6 @@ Write-Output "Source Folder: $SourceFolder"
 Write-Output "Target Server: $TargetReportServerUri"
 Write-Output "Target Folder: $TargetFolder"
 Write-Output "====================================================================================="
-
-
-Write-Output "Marking PSGallery as Trusted..."
-Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
-
-Write-Output "Installing ReportingServicesTools Module..."
-Install-Module -Name ReportingServicesTools            
-
-Write-Output "Requesting RSTools..."
-Invoke-Expression (Invoke-WebRequest https://aka.ms/rstools)
-
-
 
 #Get-Command -Module ReportingServicesTools
 
@@ -53,8 +40,4 @@ DIR $SourceFolder -Filter *.rsd | % { $_.FullName } |
 
 Write-Output "Deploying Report Definition files from: $SourceFolder"
 DIR $SourceFolder -Filter *.rdl | % { $_.FullName } |
-
     Write-RsCatalogItem -ReportServerUri $TargetReportServerUri -Destination $TargetFolder -Verbose -Overwrite
-
-    Write-RsCatalogItem -ReportServerUri $TargetReportServerUri -Destination $TargetFolder -Verbose -Overwrite
-
