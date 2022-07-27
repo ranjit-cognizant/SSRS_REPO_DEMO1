@@ -5,8 +5,8 @@ Param(
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
 [string] $DatabaseName = "Facetsext",
 [string] $TargetFolder = "MyReports"
-#[string] $DataSourceUserName
-#[string] $DataSourcePassword
+[string] $DataSourceUserName = "ranjit",
+[string] $DataSourcePassword = "TriZett02022#r@njit"
 )
 $ErrorActionPreference = "Stop"
 
