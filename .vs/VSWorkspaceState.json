@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SSRS_REPORT"
   ],
+  "SelectedNode": "\\SSRS_REPORT\\Report1.rdl",
   "PreviewInSolutionExplorer": false
 }
