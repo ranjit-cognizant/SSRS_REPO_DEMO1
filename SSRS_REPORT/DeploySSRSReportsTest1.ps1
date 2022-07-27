@@ -1,8 +1,17 @@
 Param(
-[string] $SourceFolder = "MyFolder111111111", 
+#[string] $SourceFolder = "/MyFolder111111111", 
+#[string] $DataSourceFile = "DataSource1.rds", 
+#[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
+#[string] $DBServerName = "VM-SQLSVR-TMG-P", 
+#[string] $DatabaseName = "Facetsext",
+#[string] $TargetFolder = "MyReports",
+#[string] $DataSourceUserName = "alocalbox",
+#[string] $DataSourcePassword = "TriZett02022"
+
+[string] $DataSourceFolder,
 [string] $DataSourceFile = "DataSource1.rds", 
-[string] $TargetReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
-[string] $DBServerName = "VM-SQLSVR-TMG-P", 
+[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl",
+[string] $DBServerName = "VM-SQLSVR-TMG-H", 
 [string] $DatabaseName = "Facetsext",
 [string] $TargetFolder = "MyReports",
 [string] $DataSourceUserName = "alocalbox",
@@ -13,7 +22,7 @@ $ErrorActionPreference = "Stop"
 
 Echo "Data Source Folder: $SourceFolder"
 Echo "Data Source File: $DataSourceFile"
-Echo "Report Server URI: $TargetReportServerUri"
+Echo "Report Server URI: $ReportServerUri"
 Echo "DB Server Name: $DBServerName"
 Echo "Database Name: $DatabaseName"
 Echo "Data Target Folder: $TargetFolder"
@@ -21,7 +30,7 @@ Echo "Data Source UserName: $DataSourceUserName"
 Echo "Data Source Password: $DataSourcePassword"
 
 Write-Output "Creating Folder: $TargetFolder"
-New-RsFolder -ReportServerUri $TargetReportServerUri -Path / -Name $TargetFolder -Verbose -ErrorAction SilentlyContinue
+New-RsFolder -ReportServerUri $ReportServerUri -Path / -Name $TargetFolder -Verbose -ErrorAction SilentlyContinue
 
 $TargetFolder = "/" + $TargetFolder
 
@@ -30,7 +39,7 @@ $ConnectString = "Data Source="+ $DBServerName+ ";Initial Catalog="+ $DatabaseNa
 
 try{
 #Create Proxy
-$global:proxy = New-WebServiceProxy -Uri $TargetReportServerUri -UseDefaultCredential -ErrorAction Stop;
+$global:proxy = New-WebServiceProxy -Uri $ReportServerUri -UseDefaultCredential -ErrorAction Stop;
 If ($proxy -ne $null) 
 {
 echo $global:proxy.ToString()
@@ -59,28 +68,28 @@ $dataSourceDefinition.CredentialRetrieval = $credentialRetrieval;
 $dataSourceDefinition.WindowsCredentials = $true;
 $dataSourceDefinition.UserName = $DataSourceUserName;
 $dataSourceDefinition.Password = $DataSourcePassword;
-try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$SourceFolder,$true,
+try{ $newDataSource = $proxy.CreateDataSource($xmlDataSourceName.Name,$TargetFolder,$true,
     $dataSourceDefinition,$null); }catch{ throw $_.Exception; }
 	
 
 Write-Output "====================================================================================="
 Write-Output "                             Deploying SSRS Reports"
 Write-Output "Source Folder: $SourceFolder"
-Write-Output "Target Server: $TargetReportServerUri"
+Write-Output "Target Server: $ReportServerUri"
 Write-Output "Target Folder: $TargetFolder"
 Write-Output "====================================================================================="
 
-Write-Output "Deploying Data Source files from: $SourceFolder"
-DIR $SourceFolder -Filter *.rds | % { $_.FullName } |
-    Write-RsCatalogItem -ReportServerUri $TargetReportServerUri -Destination $TargetFolder -Verbose -Overwrite
+#Write-Output "Deploying Data Source files from: $SourceFolder"
+#DIR $SourceFolder -Filter *.rds | % { $_.FullName } |
+    #Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
 Write-Output "Deploying Data Set files from: $SourceFolder"
 DIR $SourceFolder -Filter *.rsd | % { $_.FullName } |
-    Write-RsCatalogItem -ReportServerUri $TargetReportServerUri -Destination $TargetFolder -Verbose -Overwrite
+    Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
 Write-Output "Deploying Report Definition files from: $SourceFolder"
 DIR $SourceFolder -Filter *.rdl | % { $_.FullName } |
-    Write-RsCatalogItem -ReportServerUri $TargetReportServerUri -Destination $TargetFolder -Verbose -Overwrite
+    Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
 echo "Done.";
 
