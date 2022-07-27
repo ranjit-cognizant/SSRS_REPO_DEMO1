@@ -1,5 +1,5 @@
 Param(
-[string] $SourceFolder = "", 
+[string] $SourceFolder, 
 [string] $DataSourceFile = "DataSource1.rds", 
 [string] $TargetReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
@@ -11,9 +11,9 @@ Param(
 
 $ErrorActionPreference = "Stop"
 
+Echo "Data Source Folder: $SourceFolder"
 Echo "Data Source File: $DataSourceFile"
 Echo "Report Server URI: $TargetReportServerUri"
-Echo "Data Source Folder: $SourceFolder"
 Echo "DB Server Name: $DBServerName"
 Echo "Database Name: $DatabaseName"
 Echo "Data Target Folder: $TargetFolder"
