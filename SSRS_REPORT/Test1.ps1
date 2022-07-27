@@ -1,6 +1,6 @@
 Param(
-[string] $DataSourceFile = "SSRS_REPORT/DataSource1.rds", 
-[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer",
+[string] $DataSourceFile = "DataSource1.rds", 
+[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl",
 [string] $DataSourceFolder = "/SSRS_REPORT", 
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
 [string] $DatabaseName = "Facetsext",
@@ -33,7 +33,7 @@ echo $_.Exception.Message;
 
 [xml]$XmlDataSourceDefinition = Get-Content $DataSourceFile;
 
-#Echo("Data Source Name:$($XmlDataSourceDefinition.RptDataSource.Name)")
+Echo("Data Source Name: $($XmlDataSourceDefinition.RptDataSource.Name)")
 $xmlDataSourceName = $XmlDataSourceDefinition.RptDataSource | where {$_ | get-member ConnectionProperties};
 
 try{ $type = $proxy.GetType().Namespace; }catch{ throw $_.Exception; }
