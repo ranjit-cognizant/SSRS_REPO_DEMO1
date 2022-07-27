@@ -1,0 +1,28 @@
+trigger:
+- master
+
+pool:
+  name: MyAGPool_VM-SQLSVR-TMG-F
+  demands: msbuild
+
+steps:
+- task: MSBuild@1
+  displayName: 'Build solution'
+  inputs:
+    solution: ReportProjectSSRS1
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: ReportProjectSSRS1
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+
+- task: PowerShell@2
+  displayName: 'PowerShell Script'
+  inputs:
+    targetType: filePath
+    filePath: '$(build.artifactstagingdirectory)/DeploySSRSReports.ps1'
+    arguments: '-SourceFolder "ReportProjectSSRS1" -TargetReportServerUri "http://vm-sqlsvr-tmg-f/ReportServer" -TargetFolder MyFolder111'
+
+
