@@ -2,7 +2,7 @@ Param(
 [string] $SourceFolder, 
 [string] $DataSourceFile = "DataSource1.rds", 
 [string] $TargetReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
-[string] $DBServerName = "VM-SQLSVR-TMG-F", 
+[string] $DBServerName = "VM-SQLSVR-TMG-P", 
 [string] $DatabaseName = "Facetsext",
 [string] $TargetFolder = "MyReports",
 [string] $DataSourceUserName = "alocalbox",
