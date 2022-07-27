@@ -1,7 +1,7 @@
 Param(
 [string] $DataSourceFile = "DataSource1.rds", 
 [string] $TargetReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
-[string] $SourceFolder = "", 
+#[string] $SourceFolder = "SSRS_REPORT", 
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
 [string] $DatabaseName = "Facetsext",
 [string] $TargetFolder = "MyReports",
@@ -17,13 +17,17 @@ Echo "Data Source Folder: $SourceFolder"
 Echo "DB Server Name: $DBServerName"
 Echo "Database Name: $DatabaseName"
 Echo "Data Target Folder: $TargetFolder"
+Echo "Data Source UserName: $DataSourceUserName"
+Echo "Data Source Password: $DataSourcePassword"
 
 Write-Output "Creating Folder: $TargetFolder"
 New-RsFolder -ReportServerUri $TargetReportServerUri -Path / -Name $TargetFolder -Verbose -ErrorAction SilentlyContinue
 
 $TargetFolder = "/" + $TargetFolder
 
+#Data Source Connection String
 $ConnectString = "Data Source="+ $DBServerName+ ";Initial Catalog="+ $DatabaseName
+
 try{
 #Create Proxy
 $global:proxy = New-WebServiceProxy -Uri $TargetReportServerUri -UseDefaultCredential -ErrorAction Stop;
@@ -39,7 +43,7 @@ echo $_.Exception.Message;
 
 [xml]$XmlDataSourceDefinition = Get-Content $DataSourceFile;
 
-#Echo("Data Source Name:$($XmlDataSourceDefinition.RptDataSource.Name)")
+Echo("Data Source Name: $($XmlDataSourceDefinition.RptDataSource.Name)")
 $xmlDataSourceName = $XmlDataSourceDefinition.RptDataSource | where {$_ | get-member ConnectionProperties};
 
 try{ $type = $proxy.GetType().Namespace; }catch{ throw $_.Exception; }
