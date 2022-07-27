@@ -8,7 +8,7 @@ Param(
 #[string] $DataSourceUserName = "alocalbox",
 ##[string] $DataSourcePassword = "TriZett02022"
 
-[string] $DataDataSourceFolder,
+[string] $DataDataSourceFolder = "SSRS_REPORT",
 [string] $DataSourceFile = "DataSource1.rds", 
 [string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl",
 [string] $DBServerName = "VM-SQLSVR-TMG-F", 
