@@ -11,11 +11,11 @@ Param(
 [string] $DataSourceFolder,
 [string] $DataSourceFile = "DataSource1.rds",
 [string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl",
-[string] $DBServerName = "VM-SQLSVR-TMG-F", 
-[string] $DatabaseName = "Facetsext",
+[string] $DBServerName = "VM-SQLSVR-TMG-F-PPP", 
+[string] $DatabaseName = "Facetsext-PPP",
 [string] $TargetFolder = "MyReports",
-[string] $DataSourceUserName = "alocalbox",
-[string] $DataSourcePassword = "TriZett02022"
+[string] $DataSourceUserName = "alocalboxppp",
+[string] $DataSourcePassword = "TriZett02022ppp"
 )
 
 $ErrorActionPreference = "Stop"
