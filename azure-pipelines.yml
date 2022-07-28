@@ -9,20 +9,20 @@ steps:
 - task: MSBuild@1
   displayName: 'Build solution'
   inputs:
-    solution: ReportProjectSSRS1
+    solution: 'SSRS_REPORT'
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
-    SourceFolder: ReportProjectSSRS1
+    SourceFolder: 'SSRS_REPORT'
+    Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
 
 
 - task: PowerShell@2
   displayName: 'PowerShell Script'
   inputs:
-    targetType: filePath
-    filePath: '$(build.artifactstagingdirectory)/DeploySSRSReports.ps1'
-    arguments: '-SourceFolder "ReportProjectSSRS1" -TargetReportServerUri "http://vm-sqlsvr-tmg-f/ReportServer" -TargetFolder MyFolder111'
+    filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
+    arguments: '$(DataSourceFolder) $(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DataSourcePassword)'
 
 
