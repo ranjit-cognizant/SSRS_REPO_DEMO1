@@ -6,7 +6,7 @@ Param(
 #[string] $DatabaseName = "Facetsext",
 #[string] $TargetFolder = "MyReports",
 #[string] $DataSourceUserName = "alocalbox",
-##[string] $DataSourcePassword = "TriZett02022"
+#[string] $DataSourcePassword = "TriZett02022"
 
 [string] $DataSourceFolder,
 [string] $DataSourceFile,
