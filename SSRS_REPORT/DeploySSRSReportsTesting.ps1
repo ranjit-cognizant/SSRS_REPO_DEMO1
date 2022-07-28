@@ -83,9 +83,9 @@ Write-Output "==================================================================
 #DIR $DataSourceFolder -Filter *.rds | % { $_.FullName } |
     #Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
-Write-Output "Deploying Data Set files from: $DataSourceFolder"
-DIR $DataSourceFolder -Filter *.rsd | % { $_.FullName } |
-    Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
+#Write-Output "Deploying Data Set files from: $DataSourceFolder"
+#DIR $DataSourceFolder -Filter *.rsd | % { $_.FullName } |
+    #Write-RsCatalogItem -ReportServerUri $ReportServerUri -Destination $TargetFolder -Verbose -Overwrite
 
 Write-Output "Deploying Report Definition files from: $DataSourceFolder"
 DIR $DataSourceFolder -Filter *.rdl | % { $_.FullName } |
