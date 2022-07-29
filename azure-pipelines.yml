@@ -5,8 +5,6 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
-variables:
-- group: DEV-VG-YAML
 
 stages:
 - stage: BUILD
@@ -18,6 +16,7 @@ stages:
         displayName: 'Build solution'
         inputs:
           solution: 'SSRS_REPORT'
+
 - stage: DEPLOY
   jobs:  
   - job: Deploy
@@ -28,10 +27,11 @@ stages:
         Contents: '**'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
+
     - task: PowerShell@2
       displayName: 'PowerShell Script'
       inputs:
-        filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
-        arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
+          filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
 
