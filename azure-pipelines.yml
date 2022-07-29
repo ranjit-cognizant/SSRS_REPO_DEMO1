@@ -25,17 +25,22 @@ stages:
   jobs:  
   - job: Deploy
     steps:
-    - task: CopyFiles@2
+    - task: CopyPublishBuildArtifacts@1
       inputs:
-        SourceFolder: 'SSRS_REPORT'
-        Contents: '**'
-        TargetFolder: '$(build.artifactstagingdirectory)'
-
-
+        CopyRoot: '$(Agent.BuildDirectory)'
+        Contents: '**\*'
+        ArtifactName: 'ArtifactSSRS'
+        ArtifactType: 'Container'
+        TargetPath: $(build.artifactstagingdirectory)
     - task: PowerShell@2
-      displayName: 'PowerShell Script'
+      displayName: 'PowerShell Script for DEV Env.'
       inputs:
           filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
+    - task: PowerShell@2
+      displayName: 'PowerShell Scrip for PRD Env.'
+      inputs:
+          filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
