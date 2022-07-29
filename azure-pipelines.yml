@@ -5,16 +5,7 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
-variables:
-- name: My-VG-RAN
-  value: 'value of my VG'
-- group: DEV-VG
-- name: DEV-VG
-  value: $[variables.DBServerName]
-
 steps:
-- script: echo $(My-VG-RAN)
-- script: echo $(DEV-VG)
 - task: MSBuild@1
   displayName: 'Build solution'
   inputs:
