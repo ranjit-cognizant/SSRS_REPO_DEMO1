@@ -1,5 +1,5 @@
 trigger:
-- master
+- TESTING-2
 
 pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
