@@ -42,7 +42,7 @@ stages:
         ArtifactName: 'MyArtifactBuildSSRSY'
         ArtifactType: 'Container'
         
-- stage: DEPLOY-DEV
+- stage: DEPLOY
   jobs:  
   - job: Deploy-Dev
     steps:
@@ -52,7 +52,7 @@ stages:
           filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
-- stage: DEPLOY-PRD
+- stage: DEPLOY
   jobs:  
   - job: Deploy-PRD
     steps:
