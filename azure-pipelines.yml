@@ -32,6 +32,13 @@ stages:
         SourceFolder: '$(agent.builddirectory)'
         Contents: '**\*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+
+    - task: CopyPublishBuildArtifacts@1
+      inputs:
+        Contents: '**\*'
+        ArtifactName: 'MyBuildSSRS'
+        ArtifactType: 'Container'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
