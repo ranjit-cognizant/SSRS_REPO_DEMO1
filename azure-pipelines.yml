@@ -9,7 +9,7 @@ variables:
 - group: DEV-VG-YAML
 - group: PRD-VG-YAML
 - name: my-passed-variable
-  value: $[variables.DataSourceFolder] $[variables.DataSourceFile]
+  value: $[variables.DataSourceFolder] 
 
 stages:
 - stage: BUILD
