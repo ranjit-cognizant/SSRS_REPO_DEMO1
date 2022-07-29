@@ -5,15 +5,24 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
+variables:
+- group: DEV-VG-YAML
+- group: PRD-VG-YAML
+- name: my-passed-variable
+  value: $[variables.DataSourceFolder] $[variables.DataSourceFile]
+
 stages:
 - stage: BUILD
   jobs:
   - job: Build
     steps:
-    - task: MSBuild@1
-      displayName: 'Build solution'
-      inputs:
-        solution: 'SSRS_REPORT'
+      - script: echo $(DEV-VG-YAML) # uses macro syntax
+      - script: echo $(my-passed-variable)
+
+      - task: MSBuild@1
+        displayName: 'Build solution'
+        inputs:
+          solution: 'SSRS_REPORT'
 - stage: DEPLOY
   jobs:  
   - job: Deploy
