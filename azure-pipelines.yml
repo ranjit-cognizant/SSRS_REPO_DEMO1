@@ -7,15 +7,12 @@ pool:
 
 variables:
 - group: DEV-VG-YAML
-- group: PRD-VG-YAML
-
 
 stages:
 - stage: BUILD
   jobs:
   - job: Build
     steps:
-
 
       - task: MSBuild@1
         displayName: 'Build solution'
