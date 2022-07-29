@@ -17,12 +17,6 @@ steps:
     Contents: '**'
     TargetFolder: '$(build.artifactstagingdirectory)'
 
-- task: CopyPublishBuildArtifacts@1
-  inputs:
-    CopyRoot: 'SSRS_REPORT'
-    Contents: '**\*'
-    ArtifactName: 'ArtifactSSRS'
-    ArtifactType: 'Container'
 - task: PowerShell@2
   displayName: 'PowerShell Script'
   inputs:
