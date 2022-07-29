@@ -8,16 +8,14 @@ pool:
 variables:
 - group: DEV-VG-YAML
 - group: PRD-VG-YAML
-- name: my-passed-variable
-  value: $[variables.DataSourceFolder] 
+
 
 stages:
 - stage: BUILD
   jobs:
   - job: Build
     steps:
-      - script: echo $(DEV-VG-YAML) # uses macro syntax
-      - script: echo $(my-passed-variable)
+
 
       - task: MSBuild@1
         displayName: 'Build solution'
