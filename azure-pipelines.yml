@@ -32,6 +32,6 @@ stages:
       displayName: 'PowerShell Script'
       inputs:
         filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
-        arguments: '$(DataSourceFolder) $(build.artifactstagingdirectory)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
+        arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
 
 
