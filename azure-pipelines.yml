@@ -42,9 +42,9 @@ stages:
         ArtifactName: 'MyArtifactBuildSSRSY'
         ArtifactType: 'Container'
         
-- stage: DEPLOY
+- stage: DEPLOY_DEV
   jobs:  
-  - job: Deploy-Dev
+  - job: Deploy_Dev
     steps:
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
@@ -52,9 +52,9 @@ stages:
           filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
-- stage: DEPLOY
+- stage: DEPLOY_PRD
   jobs:  
-  - job: Deploy-PRD
+  - job: Deploy_Prd
     steps:
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
