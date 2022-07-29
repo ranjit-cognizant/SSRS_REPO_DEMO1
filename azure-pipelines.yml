@@ -32,20 +32,16 @@ stages:
         Contents: '**\*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- stage: PUBLISH
+- stage: DEPLOY
   jobs:  
-  - job: Publish
+  - job: Deploy
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
         Contents: '**\*'
         ArtifactName: 'MyArtifactBuildSSRSY'
         ArtifactType: 'Container'
-        
-- stage: DEPLOY_DEV
-  jobs:  
-  - job: Deploy_Dev
-    steps:
+
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
