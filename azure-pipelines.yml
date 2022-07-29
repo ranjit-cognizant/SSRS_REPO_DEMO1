@@ -5,22 +5,29 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
-steps:
-- task: MSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: 'SSRS_REPORT'
+stages:
+- stage: BUILD
+  jobs:
+  - job: Build
+    steps:
+    - task: MSBuild@1
+      displayName: 'Build solution'
+      inputs:
+        solution: 'SSRS_REPORT'
+- stage: DEPLOY
+  jobs:  
+  - job: Deploy
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: 'SSRS_REPORT'
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: 'SSRS_REPORT'
-    Contents: '**'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
-- task: PowerShell@2
-  displayName: 'PowerShell Script'
-  inputs:
-    filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
-    arguments: '$(DataSourceFolder) $(build.artifactstagingdirectory)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DataSourcePassword)'
+    - task: PowerShell@2
+      displayName: 'PowerShell Script'
+      inputs:
+        filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
+        arguments: '$(DataSourceFolder) $(build.artifactstagingdirectory)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DataSourcePassword)'
 
 
