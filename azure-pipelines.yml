@@ -5,7 +5,6 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
-
 variables:
 - group: DEV-VG
 
@@ -32,26 +31,32 @@ stages:
         Contents: '**\*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- stage: DEPLOY
+
+- stage: DEPLOY_DEV
   jobs:  
-  - job: Deploy
+  - job: Deploy_Dev
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
         Contents: '**\*'
         ArtifactName: 'MyArtifactBuildSSRSY'
         ArtifactType: 'Container'
-
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
           filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
+
 - stage: DEPLOY_PRD
   jobs:  
   - job: Deploy_Prd
     steps:
+    - task: CopyPublishBuildArtifacts@1
+      inputs:
+        Contents: '**\*'
+        ArtifactName: 'MyArtifactBuildSSRSY'
+        ArtifactType: 'Container'
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
       inputs:
