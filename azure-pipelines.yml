@@ -28,7 +28,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        contents: '_buildOutput/**'
+        contents: '**\*'
         targetFolder: $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
       inputs:
