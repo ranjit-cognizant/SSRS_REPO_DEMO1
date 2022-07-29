@@ -39,17 +39,12 @@ stages:
         Contents: '**\*'
         ArtifactName: 'MyBuildSSRS'
         ArtifactType: 'Container'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
         
 
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
-          filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
+          filePath: '$(build.artifactstagingdirectory)/MyBuildSSRS/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
     - task: PowerShell@2
