@@ -5,10 +5,6 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
-variables:
-- group: DEV-VG
-
-
 stages:
 - stage: BUILD
   jobs:
@@ -23,8 +19,6 @@ stages:
   jobs:  
   - job: Copy
     steps:
-
-
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(agent.builddirectory)'
@@ -33,6 +27,8 @@ stages:
 
 
 - stage: DEPLOY_DEV
+  variables:
+  - group: DEV-VG
   jobs:  
   - job: Deploy_Dev
     steps:
@@ -49,6 +45,8 @@ stages:
 
 
 - stage: DEPLOY_PRD
+  variables:
+  - group: PRD-VG
   jobs:  
   - job: Deploy_Prd
     steps:
