@@ -6,9 +6,6 @@ pool:
   demands: msbuild
 
 
-variables:
-- group: DEV-VG
-
 stages:
 - stage: BUILD
   jobs:
