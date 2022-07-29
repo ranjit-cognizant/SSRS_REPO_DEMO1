@@ -28,7 +28,7 @@ stages:
 
 - stage: DEPLOY_DEV
   variables:
-  - group: DEV-VG
+  - group: DEV-VG-TESTING2
   jobs:  
   - job: Deploy_Dev
     steps:
@@ -46,7 +46,7 @@ stages:
 
 - stage: DEPLOY_PRD
   variables:
-  - group: PRD-VG
+  - group: PRD-VG-TESTING2
   jobs:  
   - job: Deploy_Prd
     steps:
