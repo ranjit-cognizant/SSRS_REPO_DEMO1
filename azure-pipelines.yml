@@ -27,7 +27,7 @@ stages:
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
-        CopyRoot: '$(Agent.BuildDirectory)'
+        CopyRoot: ''
         Contents: '**\*'
         ArtifactName: 'ArtifactSSRS'
         ArtifactType: 'Container'
