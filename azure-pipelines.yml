@@ -22,7 +22,7 @@ stages:
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(agent.builddirectory)'
-        Contents: '**\*'
+        Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 
