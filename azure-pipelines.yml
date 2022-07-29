@@ -15,15 +15,14 @@ stages:
   jobs:
   - job: Build
     steps:
-
       - task: MSBuild@1
         displayName: 'Build solution'
         inputs:
           solution: 'SSRS_REPORT'
 
-- stage: DEPLOY
+- stage: COPY
   jobs:  
-  - job: Deploy
+  - job: Copy
     steps:
 
 
@@ -33,23 +32,32 @@ stages:
         Contents: '**\*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-
+- stage: PUBLISH
+  jobs:  
+  - job: Publish
+    steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
         Contents: '**\*'
         ArtifactName: 'MyArtifactBuildSSRSY'
         ArtifactType: 'Container'
         
-
+- stage: DEPLOY-DEV
+  jobs:  
+  - job: Deploy-Dev
+    steps:
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
           filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
+- stage: DEPLOY-PRD
+  jobs:  
+  - job: Deploy-PRD
+    steps:
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
       inputs:
-          filePath: '$(build.artifactstagingdirectory)/DeploySSRSReportsTesting.ps1'
-          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
-
+          filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
