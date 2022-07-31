@@ -30,7 +30,7 @@ stages:
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
-          filePath: '$(System.DefaultWorkingDirectory)/_/_/MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          filePath: '$(Build.ArtifactStagingDirectory)/MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder) $(DataSourceFolder)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
 
 
@@ -42,11 +42,12 @@ stages:
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
+        CopyRoot: 'MySSRSBuild-TESTING2'
         Contents: '**\*'
-        ArtifactName: 'MyArtifactBuildSSRSY'
+        ArtifactName: 'MySSRSBuild-TESTING2'
         ArtifactType: 'Container'
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
       inputs:
-          filePath: '$(build.artifactstagingdirectory)/_MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          filePath: '$(build.artifactstagingdirectory)/MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder) $(DataSourceFolder)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
