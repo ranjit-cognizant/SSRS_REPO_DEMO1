@@ -24,6 +24,7 @@ stages:
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
+        CopyRoot: '$(Build.ArtifactStagingDirectory)'
         Contents: '**\*'
         ArtifactName: 'MySSRSBuild-TESTING2'
         ArtifactType: 'Container'
