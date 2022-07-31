@@ -31,7 +31,7 @@ stages:
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
-          filePath: '$(Build.ArtifactStagingDirectory)/MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          filePath: '$(System.DefaultWorkingDirectory)/MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder) $(DataSourceFolder)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
 
 
