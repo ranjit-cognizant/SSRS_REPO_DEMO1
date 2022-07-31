@@ -59,4 +59,4 @@ stages:
       displayName: 'PowerShell Scrip for PRD Env.'
       inputs:
           filePath: '$(build.artifactstagingdirectory)/MySSRSBuild-TESTING2/DeploySSRSReportsTesting.ps1'
-          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MySSRSBuild-TESTING2/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
+          arguments: '$(DataSourceFolder1) $(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
