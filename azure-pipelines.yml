@@ -30,7 +30,7 @@ stages:
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
-          filePath: '$(System.DefaultWorkingDirectory)/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          filePath: '$(System.DefaultWorkingDirectory)/_MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder) $(DataSourceFolder)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
 
 
@@ -48,5 +48,5 @@ stages:
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
       inputs:
-          filePath: '$(build.artifactstagingdirectory)/MySSRSBuild-TESTING2/DeploySSRSReportsTesting.ps1'
+          filePath: '$(build.artifactstagingdirectory)/_MySSRSBuild-TESTING2/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder) $(DataSourceFolder)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
