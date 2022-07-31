@@ -24,14 +24,13 @@ stages:
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
-        CopyRoot: '$(Agent.BuildDirectory)'
         Contents: '**\*'
         ArtifactName: 'MySSRSBuild-TESTING2'
         ArtifactType: 'Container'
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
-          filePath: '$(Agent.BuildDirectory)/$(DataSourceFolder)/DeploySSRSReportsTesting.ps1'
+          filePath: '$(Build.ArtifactStagingDirectory)/$(DataSourceFolder)/DeploySSRSReportsTesting.ps1'
           arguments: '$(DataSourceFolder) $(DataSourceFolder)/$(DataSourceFile) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder) $(DataSourceUserName) $(DSPassword)'
 
 
