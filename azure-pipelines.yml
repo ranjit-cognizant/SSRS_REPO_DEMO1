@@ -53,7 +53,7 @@ stages:
     - task: CopyPublishBuildArtifacts@1
       inputs:
         Contents: '**\*'
-        ArtifactName: 'MyArtifactBuildSSRSY'
+        ArtifactName: 'MyBuildSSRSArtifactY'
         ArtifactType: 'Container'
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
