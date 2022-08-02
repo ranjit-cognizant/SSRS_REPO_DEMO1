@@ -5,24 +5,58 @@ pool:
   name: MyAGPool_VM-SQLSVR-TMG-F
   demands: msbuild
 
-steps:
-- task: MSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: ReportProjectSSRS1
+stages:
+- stage: BUILD
+  jobs:
+  - job: Build
+    steps:
+      - task: MSBuild@1
+        displayName: 'Build solution'
+        inputs:
+          solution: 'SSRS_REPORT'
 
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs:
-    SourceFolder: ReportProjectSSRS1
-    TargetFolder: '$(build.artifactstagingdirectory)'
+- stage: COPY
+  jobs:  
+  - job: Copy
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(agent.builddirectory)'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 
-- task: PowerShell@2
-  displayName: 'PowerShell Script'
-  inputs:
-    targetType: filePath
-    filePath: '$(build.artifactstagingdirectory)/DeploySSRSReports.ps1'
-    arguments: '-SourceFolder "ReportProjectSSRS1" -TargetReportServerUri "http://vm-sqlsvr-tmg-f/ReportServer" -TargetFolder MyFolder111'
+- stage: DEPLOY_DEV
+  variables:
+  - group: DEV-VG
+  jobs:  
+  - job: Deploy_Dev
+    steps:
+    - task: CopyPublishBuildArtifacts@1
+      inputs:
+        Contents: '**\*'
+        ArtifactName: 'MyArtifactBuildSSRSY'
+        ArtifactType: 'Container'
+    - task: PowerShell@2
+      displayName: 'PowerShell Script for DEV Env.'
+      inputs:
+          filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
 
+- stage: DEPLOY_PRD
+  variables:
+  - group: PRD-VG
+  jobs:  
+  - job: Deploy_Prd
+    steps:
+    - task: CopyPublishBuildArtifacts@1
+      inputs:
+        Contents: '**\*'
+        ArtifactName: 'MyArtifactBuildSSRSY'
+        ArtifactType: 'Container'
+    - task: PowerShell@2
+      displayName: 'PowerShell Scrip for PRD Env.'
+      inputs:
+          filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
