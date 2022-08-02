@@ -15,7 +15,7 @@ Param(
 [string] $DatabaseName,
 [string] $TargetFolder,
 [string] $DataSourceUserName,
-[SecureString] $DataSourcePassword
+[string] $DataSourcePassword
 )
 
 $ErrorActionPreference = "Stop"
