@@ -1,5 +1,5 @@
 Param(
-#[string] $DataSourceFolder = "/MyFolder111111111", 
+#[string] $DataSourceFolder = "MyReport123", 
 #[string] $DataSourceFile = "DataSource1.rds", 
 #[string] $ReportServerUri = "http://vm-sqlsvr-tmg-f/ReportServer/ReportService2010.asmx?wsdl", 
 #[string] $DBServerName = "VM-SQLSVR-TMG-P", 
