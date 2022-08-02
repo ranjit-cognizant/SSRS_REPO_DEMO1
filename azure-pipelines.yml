@@ -28,25 +28,25 @@ stages:
 
 - stage: DEPLOY_DEV
   variables:
-  - group: DEV-VG
+  - group: DEV-VGroup
   jobs:  
   - job: Deploy_Dev
     steps:
     - task: CopyPublishBuildArtifacts@1
       inputs:
         Contents: '**\*'
-        ArtifactName: 'MyArtifactBuildSSRSY'
+        ArtifactName: 'MyBuildSSRSArtifactY'
         ArtifactType: 'Container'
     - task: PowerShell@2
       displayName: 'PowerShell Script for DEV Env.'
       inputs:
-          filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
-          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
+          filePath: '$(build.artifactstagingdirectory)/MyBuildSSRSArtifactY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyBuildSSRSArtifactY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
 
 
 - stage: DEPLOY_PRD
   variables:
-  - group: PRD-VG
+  - group: PRD-VGroup
   jobs:  
   - job: Deploy_Prd
     steps:
@@ -58,5 +58,5 @@ stages:
     - task: PowerShell@2
       displayName: 'PowerShell Scrip for PRD Env.'
       inputs:
-          filePath: '$(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
-          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyArtifactBuildSSRSY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
+          filePath: '$(build.artifactstagingdirectory)/MyBuildSSRSArtifactY/SSRS_REPORT/DeploySSRSReportsTesting.ps1'
+          arguments: '$(DataSourceFolder1) $(build.artifactstagingdirectory)/MyBuildSSRSArtifactY/SSRS_REPORT/$(DataSourceFile1) $(ReportServerUri) $(DBServerName) $(DatabaseName) $(TargetFolder1) $(DataSourceUserName) $(DSPassword)'
