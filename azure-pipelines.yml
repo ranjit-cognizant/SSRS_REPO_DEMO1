@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  name: MyAGPool_VM-SQLSVR-TMG-F
+  name: MyAgentPool
   demands: msbuild
 
 stages:
